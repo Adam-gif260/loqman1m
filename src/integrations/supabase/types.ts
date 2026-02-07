@@ -127,7 +127,6 @@ export type Database = {
           created_at: string
           credits: number
           display_name: string | null
-          email: string | null
           id: string
           interests: string[] | null
           preferences: Json | null
@@ -143,7 +142,6 @@ export type Database = {
           created_at?: string
           credits?: number
           display_name?: string | null
-          email?: string | null
           id?: string
           interests?: string[] | null
           preferences?: Json | null
@@ -159,7 +157,6 @@ export type Database = {
           created_at?: string
           credits?: number
           display_name?: string | null
-          email?: string | null
           id?: string
           interests?: string[] | null
           preferences?: Json | null

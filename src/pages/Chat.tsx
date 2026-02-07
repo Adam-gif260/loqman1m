@@ -69,7 +69,6 @@ export default function Chat() {
         .order('created_at', { ascending: true });
       if (data) {
         setMessages(data.map(m => ({ ...m, role: m.role as 'user' | 'assistant' })));
-        // Check if last message has code
         const last = data[data.length - 1];
         if (last?.role === 'assistant') {
           const code = extractCode(last.content);
@@ -88,7 +87,6 @@ export default function Chat() {
     const codeBlockRegex = /```(?:html|htm|css|javascript|js|python|py|tsx?|jsx?)\n([\s\S]*?)```/;
     const match = text.match(codeBlockRegex);
     if (match) return match[1].trim();
-    // Try generic code block
     const genericMatch = text.match(/```\n?([\s\S]*?)```/);
     if (genericMatch && genericMatch[1].trim().length > 100) return genericMatch[1].trim();
     return null;
@@ -109,7 +107,6 @@ export default function Chat() {
   const sendMessage = useCallback(async (input: string, imageUrl?: string) => {
     if (!user || !input.trim()) return;
 
-    // Check credits
     if (profile && profile.credits <= 0) {
       setShowSubscriptionPopup(true);
       return;
@@ -123,7 +120,6 @@ export default function Chat() {
       setActiveConversation(convId);
     }
 
-    // Create user message
     const userMsg: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -132,7 +128,6 @@ export default function Chat() {
     };
     setMessages(prev => [...prev, userMsg]);
 
-    // Save to DB
     await supabase.from('messages').insert({
       conversation_id: convId,
       user_id: user.id,
@@ -141,12 +136,10 @@ export default function Chat() {
       image_url: imageUrl,
     });
 
-    // Deduct credit
     await supabase.from('profiles').update({ credits: (profile?.credits || 1) - 1, total_credits_used: (profile?.total_credits_used || 0) + 1 }).eq('user_id', user.id);
     await supabase.from('credit_transactions').insert({ user_id: user.id, amount: -1, type: 'usage', description: 'Message IA' });
     refreshProfile();
 
-    // Prepare messages for AI
     const aiMessages: { role: string; content: any }[] = messages.concat(userMsg).map(m => {
       if (m.image_url) {
         return {
@@ -176,17 +169,19 @@ export default function Chat() {
           return [...prev, { id: assistantId, role: 'assistant', content: fullResponse }];
         });
 
-        // Check for code in streaming response
         const code = extractCode(fullResponse);
         if (code) {
           setPreviewCode(code);
-          setShowPreview(true);
+          if (!showPreview) {
+            setShowPreview(true);
+            // Auto-hide sidebar when code appears
+            setSidebarOpen(false);
+          }
         }
       },
       onDone: async () => {
         setIsStreaming(false);
         const code = extractCode(fullResponse);
-        // Save assistant message
         await supabase.from('messages').insert({
           conversation_id: convId!,
           user_id: user.id,
@@ -195,7 +190,6 @@ export default function Chat() {
           has_code: !!code,
           code_content: code,
         });
-        // Update conversation title if first message
         await supabase.from('conversations').update({ updated_at: new Date().toISOString() }).eq('id', convId!);
       },
       onError: (error) => {
@@ -203,7 +197,7 @@ export default function Chat() {
         toast.error(error);
       },
     });
-  }, [user, profile, activeConversation, messages, streamChat, refreshProfile]);
+  }, [user, profile, activeConversation, messages, streamChat, refreshProfile, showPreview]);
 
   const newChat = () => {
     setActiveConversation(null);
@@ -251,7 +245,7 @@ export default function Chat() {
         <div className={`flex flex-col min-w-0 ${
           isMobile
             ? (mobileView === 'chat' ? 'flex-1' : 'hidden')
-            : (showPreview ? 'flex-1' : 'flex-1')
+            : 'flex-1'
         }`}>
           <ChatArea
             messages={messages}

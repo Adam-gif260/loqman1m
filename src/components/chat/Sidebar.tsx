@@ -1,5 +1,5 @@
 import { useAuth } from '@/hooks/useAuth';
-import { Plus, MessageSquare, Trash2, ChevronLeft, LogOut, Coins, Settings, Gift } from 'lucide-react';
+import { Plus, MessageSquare, Trash2, ChevronLeft, LogOut, Coins, Settings, Gift, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import logo from '@/assets/logo.png';
 import type { Conversation } from '@/pages/Chat';
@@ -80,11 +80,15 @@ export default function Sidebar({ conversations, activeId, isOpen, onToggle, onN
             <Coins size={14} className="text-primary" />
             <span className="text-sm text-sidebar-foreground">{credits} crédits</span>
           </div>
-          <button onClick={() => navigate('/chat')} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
-            <Gift size={14} />
-            <span>Affiliation</span>
+          <button onClick={() => navigate('/dashboard')} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+            <BarChart3 size={14} />
+            <span>Dashboard</span>
           </button>
-          <button onClick={() => navigate('/chat')} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+          <button onClick={() => navigate('/referral')} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
+            <Gift size={14} />
+            <span>Parrainage</span>
+          </button>
+          <button onClick={() => navigate('/settings')} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors">
             <Settings size={14} />
             <span>Paramètres</span>
           </button>

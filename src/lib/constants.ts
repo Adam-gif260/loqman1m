@@ -4,7 +4,7 @@ export const APP_DESCRIPTION = "Créez des applications complètes en décrivant
 
 export const INITIAL_CREDITS = 15;
 export const DAILY_FREE_CREDITS = 5;
-export const REFERRAL_BONUS = 10;
+export const REFERRAL_BONUS = 20;
 
 export const PLANS = [
   {

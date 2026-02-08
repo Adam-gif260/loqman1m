@@ -45,7 +45,7 @@ export default function SubscriptionPopup({ onClose }: SubscriptionPopupProps) {
                 )}
                 <h3 className="font-display font-semibold text-foreground">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 my-2">
-                  <span className="text-2xl font-display font-bold text-foreground">${plan.price}</span>
+                  <span className="text-2xl font-display font-bold text-foreground">{plan.price}€</span>
                   <span className="text-xs text-muted-foreground">/mois</span>
                 </div>
                 <p className="text-xs text-muted-foreground mb-4">{plan.credits} crédits/mois</p>

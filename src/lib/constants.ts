@@ -9,7 +9,7 @@ export const REFERRAL_BONUS = 20;
 export const PLANS = [
   {
     name: "Starter",
-    price: 25,
+    price: 16,
     credits: 100,
     features: ["100 crédits/mois", "IA avancée", "Preview en temps réel", "Support email"],
     stripeUrl: "https://buy.stripe.com/dRmeV63qgdUU4Q2bHrdnW00",
@@ -17,7 +17,7 @@ export const PLANS = [
   },
   {
     name: "Pro",
-    price: 50,
+    price: 30,
     credits: 300,
     features: ["300 crédits/mois", "IA ultra-performante", "Domaine personnalisé", "Support prioritaire", "Upload documents"],
     stripeUrl: "https://buy.stripe.com/8x2fZaf8Y2ccdmydPzdnW01",
@@ -25,7 +25,7 @@ export const PLANS = [
   },
   {
     name: "Business",
-    price: 89,
+    price: 75,
     credits: 1000,
     features: ["1000 crédits/mois", "IA illimitée", "Équipe collaborative", "API access", "Support dédié", "Analytics avancés"],
     stripeUrl: "https://buy.stripe.com/4gM8wI1i82ccgyK8vfdnW02",

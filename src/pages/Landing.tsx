@@ -163,9 +163,9 @@ export default function Landing() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: 'Starter', price: 25, credits: '100 crédits/mois', link: 'https://buy.stripe.com/dRmeV63qgdUU4Q2bHrdnW00' },
-              { name: 'Pro', price: 50, credits: '300 crédits/mois', link: 'https://buy.stripe.com/8x2fZaf8Y2ccdmydPzdnW01', popular: true },
-              { name: 'Business', price: 89, credits: '1000 crédits/mois', link: 'https://buy.stripe.com/4gM8wI1i82ccgyK8vfdnW02' },
+              { name: 'Starter', price: 16, credits: '100 crédits/mois', link: 'https://buy.stripe.com/dRmeV63qgdUU4Q2bHrdnW00' },
+              { name: 'Pro', price: 30, credits: '300 crédits/mois', link: 'https://buy.stripe.com/8x2fZaf8Y2ccdmydPzdnW01', popular: true },
+              { name: 'Business', price: 75, credits: '1000 crédits/mois', link: 'https://buy.stripe.com/4gM8wI1i82ccgyK8vfdnW02' },
             ].map((plan) => (
               <div
                 key={plan.name}
@@ -178,7 +178,7 @@ export default function Landing() {
                 )}
                 <h3 className="font-display font-semibold text-foreground text-lg mb-1">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-4">
-                  <span className="text-3xl font-display font-bold text-foreground">${plan.price}</span>
+                  <span className="text-3xl font-display font-bold text-foreground">{plan.price}€</span>
                   <span className="text-sm text-muted-foreground">/mois</span>
                 </div>
                 <p className="text-sm text-muted-foreground mb-6">{plan.credits}</p>

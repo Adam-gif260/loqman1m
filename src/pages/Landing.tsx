@@ -163,9 +163,9 @@ export default function Landing() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { name: 'Starter', price: 25, credits: '100 crédits/mois', link: 'https://buy.stripe.com/test_7sY7sN629gIkdz97xu0x200' },
-              { name: 'Pro', price: 50, credits: '300 crédits/mois', link: 'https://buy.stripe.com/test_aFaeVf1LTajW2Uv7xu0x201', popular: true },
-              { name: 'Business', price: 89, credits: '1000 crédits/mois', link: 'https://buy.stripe.com/test_4gM14peyF63G2Uv2da0x202' },
+              { name: 'Starter', price: 25, credits: '100 crédits/mois', link: 'https://buy.stripe.com/dRmeV63qgdUU4Q2bHrdnW00' },
+              { name: 'Pro', price: 50, credits: '300 crédits/mois', link: 'https://buy.stripe.com/8x2fZaf8Y2ccdmydPzdnW01', popular: true },
+              { name: 'Business', price: 89, credits: '1000 crédits/mois', link: 'https://buy.stripe.com/4gM8wI1i82ccgyK8vfdnW02' },
             ].map((plan) => (
               <div
                 key={plan.name}

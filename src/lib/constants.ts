@@ -12,7 +12,7 @@ export const PLANS = [
     price: 25,
     credits: 100,
     features: ["100 crédits/mois", "IA avancée", "Preview en temps réel", "Support email"],
-    stripeUrl: "https://buy.stripe.com/test_7sY7sN629gIkdz97xu0x200",
+    stripeUrl: "https://buy.stripe.com/dRmeV63qgdUU4Q2bHrdnW00",
     popular: false,
   },
   {
@@ -20,7 +20,7 @@ export const PLANS = [
     price: 50,
     credits: 300,
     features: ["300 crédits/mois", "IA ultra-performante", "Domaine personnalisé", "Support prioritaire", "Upload documents"],
-    stripeUrl: "https://buy.stripe.com/test_aFaeVf1LTajW2Uv7xu0x201",
+    stripeUrl: "https://buy.stripe.com/8x2fZaf8Y2ccdmydPzdnW01",
     popular: true,
   },
   {
@@ -28,7 +28,7 @@ export const PLANS = [
     price: 89,
     credits: 1000,
     features: ["1000 crédits/mois", "IA illimitée", "Équipe collaborative", "API access", "Support dédié", "Analytics avancés"],
-    stripeUrl: "https://buy.stripe.com/test_4gM14peyF63G2Uv2da0x202",
+    stripeUrl: "https://buy.stripe.com/4gM8wI1i82ccgyK8vfdnW02",
     popular: false,
   },
 ] as const;

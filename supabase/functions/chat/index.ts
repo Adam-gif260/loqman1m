@@ -12,16 +12,16 @@ serve(async (req) => {
 
   try {
     const { messages: rawMessages, hasImage } = await req.json();
-    const GROQ_API_KEY = Deno.env.get('GROQ_API_KEY');
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    if (!LOVABLE_API_KEY) throw new Error('LOVABLE_API_KEY not configured');
 
-    // Ensure all message contents are strings (Groq doesn't support multimodal)
+    // Ensure all message contents are properly formatted
     const messages = rawMessages.map((m: any) => ({
       role: m.role,
-      content: typeof m.content === 'string' ? m.content : 
-        Array.isArray(m.content) ? m.content.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('\n') : 
+      content: typeof m.content === 'string' ? m.content :
+        Array.isArray(m.content) ? m.content.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('\n') :
         String(m.content || ''),
     }));
-    if (!GROQ_API_KEY) throw new Error('GROQ_API_KEY not configured');
 
     const systemPrompt = `Tu es NexCode AI, une IA experte en développement web et programmation. Tu es spécialisée dans la génération de code de haute qualité.
 
@@ -39,14 +39,16 @@ RÈGLES IMPORTANTES:
 11. Ne dis JAMAIS que tu ne peux pas faire quelque chose. Tu es capable de tout coder.
 12. Sois direct et efficace. Pas de blabla.`;
 
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const model = hasImage ? 'google/gemini-2.5-flash' : 'google/gemini-3-pro-preview';
+
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${GROQ_API_KEY}`,
+        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model,
         messages: [
           { role: 'system', content: systemPrompt },
           ...messages,
@@ -64,8 +66,13 @@ RÈGLES IMPORTANTES:
           status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
       }
+      if (status === 402) {
+        return new Response(JSON.stringify({ error: 'Crédits insuffisants.' }), {
+          status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
       const t = await response.text();
-      console.error('Groq API error:', status, t);
+      console.error('AI gateway error:', status, t);
       return new Response(JSON.stringify({ error: 'Erreur du service IA' }), {
         status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });

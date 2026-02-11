@@ -39,7 +39,7 @@ RÈGLES IMPORTANTES:
 11. Ne dis JAMAIS que tu ne peux pas faire quelque chose. Tu es capable de tout coder.
 12. Sois direct et efficace. Pas de blabla.`;
 
-    const model = hasImage ? 'google/gemini-2.5-flash' : 'google/gemini-3-pro-preview';
+    const model = hasImage ? 'google/gemini-2.5-pro' : 'google/gemini-3-pro-preview';
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',

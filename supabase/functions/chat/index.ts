@@ -11,8 +11,16 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, hasImage } = await req.json();
+    const { messages: rawMessages, hasImage } = await req.json();
     const GROQ_API_KEY = Deno.env.get('GROQ_API_KEY');
+
+    // Ensure all message contents are strings (Groq doesn't support multimodal)
+    const messages = rawMessages.map((m: any) => ({
+      role: m.role,
+      content: typeof m.content === 'string' ? m.content : 
+        Array.isArray(m.content) ? m.content.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('\n') : 
+        String(m.content || ''),
+    }));
     if (!GROQ_API_KEY) throw new Error('GROQ_API_KEY not configured');
 
     const systemPrompt = `Tu es NexCode AI, une IA experte en développement web et programmation. Tu es spécialisée dans la génération de code de haute qualité.
